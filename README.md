@@ -21,6 +21,7 @@ Other options of this main window are:
 - We can Save or Save As... our Primary dialog file.
 - Update Lips: With this button we will open a window where we will be able to regenerate the .lips,.mp3/.wav,.vcd files.
 
+
 ## Edit Everyone
 In this window we will be able to translate Male and Female lines:
 
@@ -35,11 +36,23 @@ When we have done the changes, we can close (or press ESC) this window.
 Here we have 2 checkboxes:
 - Change all lines: With this, all the lines in a dialog file with the same text are translated at the same time. This happens when we validate the text.
 - Jump empty rows: With this checked, we go to next/previous row that contains text, so we avoid to select empty rows.
-  
+
+
 ## Edit Clans
 This is more or less the very same as Edit Everyone window. The only difference is that we have the 7 clans textboxes in a similar manner as in Edit Everyone. Remember that we have not gender lines here, se we should try to unisex all the lines in clans choices. As far as I've seen, only Malkavian and Ventrue has texts in main VtMB game.
 Here you have also the same check boxes and the methodology of work is the same as in Edit Everyone, and you can translate directly from DEEPL with the buttons, V for Ventrue and M for Malkavian.
 
 ![imagen](https://github.com/user-attachments/assets/e6bc5725-f2b4-4c66-843d-09f2e250af99)
 
+
 ## Update Lips
+With this window you will be able to regenerate the .lips, .mp3/.wav and .vcd files, adding or deleting those that changed maingly its gender. It seems the game differences if Male/Female line is used, but you need to have synchroniced that files (lip/mp3/wav/vcd) to make them work in-game.
+I created a folder "structure" that you can follow to regenerate all this files. I recommend to do all this outside of the main folders of the game or Unofficial Patch. Then, when we have it in the result folder, we can copy that folder with all the regenerated lines.
+
+![imagen](https://github.com/user-attachments/assets/e97dce23-f383-4d1d-8441-ccebcb362947)
+
+Here we will have to select each of the folders, I did this way because make it more understandable when I had to search something for update it if needed.
+Then we must check the process to test if folders are all prepared. Once is all ok, the button for "Translate lip files and Generate..." is enabled.
+We can push it and in result path we will have all the files regenerated.
+We can also translate the Speaker Name to our language if we want. In case we had done this process previously, you will see it, and will be able to copy it directly with the butoon "<-".
+
