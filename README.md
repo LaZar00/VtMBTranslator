@@ -25,7 +25,7 @@ Other options of this main window are:
 ## Edit Everyone
 In this window we will be able to translate Male and Female lines:
 
-![imagen](https://github.com/user-attachments/assets/60ea6805-ed55-4ef4-9ae2-d83a67c78020)
+<img src="https://github.com/user-attachments/assets/60ea6805-ed55-4ef4-9ae2-d83a67c78020" width="700">
 
 You will see Male and Female lines of the selected row. AND you will see the data of the lines for Primary (editable/white) and Secondary (non-editable/gray) dialogue files.
 Once we have translated the line we MUST validate it. We have here some options like Validate and go to next/previous row, or Copy the data from Secondary to Primary for going faster with the translate process, for example, if we are adapting an old translation. Remember, we ALWAYS need to validate the row to write it in the Primary grid. We can advance or back the rows with the "<<" and ">>" buttons.
@@ -49,7 +49,7 @@ Here you have also the same check boxes and the methodology of work is the same 
 With this window you will be able to regenerate the .lips, .mp3/.wav and .vcd files, adding or deleting those that changed maingly its gender. It seems the game differences if Male/Female line is used, but you need to have synchroniced that files (lip/mp3/wav/vcd) to make them work in-game.
 I created a folder "structure" that you can follow to regenerate all this files. I recommend to do all this outside of the main folders of the game or Unofficial Patch. Then, when we have it in the result folder, we can copy that folder with all the regenerated lines.
 
-![imagen](https://github.com/user-attachments/assets/e97dce23-f383-4d1d-8441-ccebcb362947)
+<img src="https://github.com/user-attachments/assets/e97dce23-f383-4d1d-8441-ccebcb362947" width="600">
 
 Here we will have to select each of the folders, I did this way because make it more understandable when I had to search something for update it if needed.
 Then we must check the process to test if folders are all prepared. Once is all ok, the button for "Translate lip files and Generate..." is enabled.
