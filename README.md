@@ -56,3 +56,14 @@ Then we must check the process to test if folders are all prepared. Once is all 
 We can push it and in result path we will have all the files regenerated.
 We can also translate the Speaker Name to our language if we want. In case we had done this process previously, you will see it, and will be able to copy it directly with the butoon "<-".
 
+
+## Individual Lips editor
+With this window, we will be able to edit those .lip files that are not included in .dlg files. I recommend also to do it externally, and not directly from the VtMB folders of the game. The only files not editable with this window/tool, are those of the "radio" folder.
+
+![imagen](https://github.com/user-attachments/assets/b9ee0f3a-44e2-4519-ba9d-e643c324ce2b)
+
+You can select from the treeview the .lip file. And you will have at the right the text translated (top textbox), and the original text (bottom textbox). Please, have in mind that this text is THE SAME. ONCE WE PUSH VALIDATE, THE TEXT WILL BE THE SAME IN BOTH TEXTBOXES. You can always open in another editor the original english text, but in this window we don't use two different files. We always use the same file.
+We have also the option to use DEEPL for the translation of the most top textbox.
+We can also translate the Speaker Name if needed.
+Finally, when we are ok with the translation, we MUST push the validate button to save the changes into the file. If you quit without validate, the changes ARE NOT SAVED.
+
