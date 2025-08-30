@@ -1,8 +1,9 @@
-﻿Imports Microsoft.WindowsAPICodePack.Dialogs
-Imports Microsoft.VisualBasic.FileIO.FileSystem
-Imports Microsoft.VisualBasic.FileIO
+﻿Imports System.Globalization
 Imports System.IO
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.FileIO.FileSystem
+Imports Microsoft.WindowsAPICodePack.Dialogs
 
 Public Class frmIndividualLipsEditor
     Public txtChanged As Boolean = False
@@ -10,7 +11,7 @@ Public Class frmIndividualLipsEditor
     Public formLoaded As Boolean = False
     Public strLipLines() As String
     Public iPHRASENumLine, iSpeakernameNumLine As Integer
-    Public speakernameOriginal As String
+    Public speakernameOriginal, startTimeOriginal, endTimeOriginal As String
     Public previousNode As TreeNode
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
@@ -22,6 +23,7 @@ Public Class frmIndividualLipsEditor
 
         frmVtMBTranslator.IndividualLipsEditorActive = False
         Me.Close()
+        frmVtMBTranslator.Focus()
     End Sub
 
 
@@ -176,20 +178,33 @@ Public Class frmIndividualLipsEditor
 
 
     Private Sub txtTranslatePHRASE_Leave(sender As Object, e As EventArgs) Handles txtTranslatePHRASE.Leave
-        If txtTranslatePHRASE.Text <> txtOriginalPHRASE.Text Or txtSpeakerName.Text <> speakernameOriginal Then
+        If txtTranslatePHRASE.Text <> txtOriginalPHRASE.Text Then
             txtChanged = True
-        Else
-            txtChanged = False
         End If
 
         UpdateBtnValidate()
     End Sub
 
     Private Sub txtSpeakerName_Leave(sender As Object, e As EventArgs) Handles txtSpeakerName.Leave
-        If txtTranslatePHRASE.Text <> txtOriginalPHRASE.Text Or txtSpeakerName.Text <> speakernameOriginal Then
+        If txtSpeakerName.Text <> speakernameOriginal Then
             txtChanged = True
-        Else
-            txtChanged = False
+        End If
+
+        UpdateBtnValidate()
+    End Sub
+
+
+    Private Sub txtStartTime_Leave(sender As Object, e As EventArgs) Handles txtStartTime.Leave
+        If txtStartTime.Text <> startTimeOriginal Then
+            txtChanged = True
+        End If
+
+        UpdateBtnValidate()
+    End Sub
+
+    Private Sub txtEndTime_Leave(sender As Object, e As EventArgs) Handles txtEndTime.Leave
+        If txtEndTime.Text <> endTimeOriginal Then
+            txtChanged = True
         End If
 
         UpdateBtnValidate()
@@ -200,8 +215,8 @@ Public Class frmIndividualLipsEditor
         If Not formLoaded Then Return
 
         ' Save values in settings
-        If Me.Location.X > 0 Then frmVtMBTranslator.FT.iIndividualLipsEditorXPos = Me.Location.X
-        If Me.Location.Y > 0 Then frmVtMBTranslator.FT.iIndividualLipsEditorYPos = Me.Location.Y
+        If Me.Location.X > 0 And Me.WindowState = FormWindowState.Normal Then frmVtMBTranslator.FT.iIndividualLipsEditorXPos = Me.Location.X
+        If Me.Location.Y > 0 And Me.WindowState = FormWindowState.Normal Then frmVtMBTranslator.FT.iIndividualLipsEditorYPos = Me.Location.Y
 
         frmVtMBTranslator.FT.WriteCFGFile()
     End Sub
@@ -210,8 +225,8 @@ Public Class frmIndividualLipsEditor
         If Not formLoaded Then Return
 
         ' Save values in settings
-        If Me.Width > 0 Then frmVtMBTranslator.FT.iIndividualLipsEditorWidth = Me.Width
-        If Me.Height > 0 Then frmVtMBTranslator.FT.iIndividualLipsEditorHeight = Me.Height
+        If Me.Width > 0 And Me.WindowState = FormWindowState.Normal Then frmVtMBTranslator.FT.iIndividualLipsEditorWidth = Me.Width
+        If Me.Height > 0 And Me.WindowState = FormWindowState.Normal Then frmVtMBTranslator.FT.iIndividualLipsEditorHeight = Me.Height
 
         frmVtMBTranslator.FT.WriteCFGFile()
     End Sub
@@ -237,6 +252,8 @@ Public Class frmIndividualLipsEditor
         txtOriginalPHRASE.Text = ""
         txtSpeakerName.Text = ""
         speakernameOriginal = ""
+        startTimeOriginal = ""
+        endTimeOriginal = ""
 
         If Not previousNode Is Nothing Then
             If File.Exists(e.Node.Tag) Then
@@ -318,7 +335,7 @@ Public Class frmIndividualLipsEditor
 
                 ' Open lip file and show the PHRASE in text box
                 strLipLines = File.ReadAllLines(strNodeTag,
-                                                System.Text.Encoding.GetEncoding(frmVtMBTranslator.ISO_8859_1))
+                                                System.Text.Encoding.GetEncoding(frmVtMBTranslator.FT.iCodepageDLGLanguage))
 
                 ' Now we search the line we need to update (search PHRASE word)
                 iPHRASENumLine = frmLipsUpdater.GetPHRASELine(strLipLines)
@@ -334,6 +351,13 @@ Public Class frmIndividualLipsEditor
                     If iSpeakernameNumLine > -1 Then
                         txtSpeakerName.Text = frmLipsUpdater.GetSpeakerNameText(strLipLines)
                         speakernameOriginal = txtSpeakerName.Text
+
+                        ' Finally we put the Start and End Times
+                        txtStartTime.Text = strLipLines(iPHRASENumLine).Split(" ")(strLipLines(iPHRASENumLine).Split(" ").Count - 2)
+                        txtEndTime.Text = strLipLines(iPHRASENumLine).Split(" ")(strLipLines(iPHRASENumLine).Split(" ").Count - 1)
+
+                        startTimeOriginal = txtStartTime.Text
+                        endTimeOriginal = txtEndTime.Text
                     Else
                         Throw New ArgumentException("The speaker_name keyword has not been found.")
                     End If
@@ -351,26 +375,58 @@ Public Class frmIndividualLipsEditor
         End Try
     End Sub
 
+    Public Function CheckTimesOK() As Boolean
+        Dim dTime As Double
+        Dim checkOk As Boolean = True
+
+        If Not Double.TryParse(txtStartTime.Text, Globalization.NumberStyles.AllowDecimalPoint,
+                               CultureInfo.InvariantCulture, dTime) Then
+            checkOk = False
+        ElseIf Not Double.TryParse(txtEndTime.Text, Globalization.NumberStyles.AllowDecimalPoint,
+                                   CultureInfo.InvariantCulture, dTime) Then
+            checkOk = False
+        Else
+            Double.TryParse(txtStartTime.Text, Globalization.NumberStyles.AllowDecimalPoint,
+                            CultureInfo.InvariantCulture, dTime)
+            txtStartTime.Text = (Math.Truncate(dTime * 1000) / 1000).ToString("0.000", CultureInfo.InvariantCulture)
+
+            Double.TryParse(txtEndTime.Text, Globalization.NumberStyles.AllowDecimalPoint,
+                            CultureInfo.InvariantCulture, dTime)
+            txtEndTime.Text = (Math.Truncate(dTime * 1000) / 1000).ToString("0.000", CultureInfo.InvariantCulture)
+        End If
+
+        Return checkOk
+    End Function
+
+
     Private Sub btnValidate_Click(sender As Object, e As EventArgs) Handles btnValidate.Click
         ' Here we will save the lips file
         ' First we need to know if there is any file loaded.
         ' We can do that checking the length of the original text string (supposedly we have loaded text)
+        ' Second, we need to check if Start and End Times are correct
         Try
             If txtOriginalPHRASE.Text.Length > 0 Then
-                ' First we update the PHRASE
-                strLipLines(iPHRASENumLine) = frmLipsUpdater.SetPHRASELine(txtTranslatePHRASE.Text, strLipLines(iPHRASENumLine).Split(" "))
+                ' Check Start and End Times
+                If CheckTimesOK() Then
+                    ' First we update the PHRASE and Start/End Times
+                    strLipLines(iPHRASENumLine) = frmLipsUpdater.SetPHRASELine(txtTranslatePHRASE.Text, (txtStartTime.Text + " " + txtEndTime.Text).Split(" "))
 
-                ' Second we update the Speaker Name
-                strLipLines(iSpeakernameNumLine) = "speaker_name" + " " + txtSpeakerName.Text
+                    ' Second we update the Speaker Name
+                    strLipLines(iSpeakernameNumLine) = "speaker_name" + " " + txtSpeakerName.Text
 
-                ' Finally se save the lip file
-                frmLipsUpdater.WriteLipFile(txtFilePath.Text, strLipLines)
+                    ' Finally se save the lip file
+                    frmLipsUpdater.WriteLipFile(txtFilePath.Text, strLipLines)
 
-                ' Update some vars and things
-                txtOriginalPHRASE.Text = txtTranslatePHRASE.Text
-                speakernameOriginal = txtSpeakerName.Text
-                txtChanged = False
-                UpdateBtnValidate()
+                    ' Update some vars and things
+                    txtOriginalPHRASE.Text = txtTranslatePHRASE.Text
+                    speakernameOriginal = txtSpeakerName.Text
+                    startTimeOriginal = txtStartTime.Text
+                    endTimeOriginal = txtEndTime.Text
+                    txtChanged = False
+                    UpdateBtnValidate()
+                Else
+                    MsgBox("There is some issue with Start or End Time values. Please check they are correct.")
+                End If
 
                 tvLipsEditor.Focus()
             End If
@@ -405,7 +461,6 @@ Public Class frmIndividualLipsEditor
             txtTranslatePHRASE.Focus()
         End If
     End Sub
-
 
 
     Private Sub UpdateBtnValidate()
