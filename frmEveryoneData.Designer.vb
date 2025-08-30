@@ -25,9 +25,9 @@ Partial Class frmEveryoneData
         Me.lblLineNumber = New System.Windows.Forms.Label()
         Me.lblMaleText = New System.Windows.Forms.Label()
         Me.lblFemaleText = New System.Windows.Forms.Label()
-        Me.lblLineCondition = New System.Windows.Forms.Label()
+        Me.lblCondition = New System.Windows.Forms.Label()
         Me.lblJumpToLine = New System.Windows.Forms.Label()
-        Me.lblSetFlags = New System.Windows.Forms.Label()
+        Me.lblExecPyAction = New System.Windows.Forms.Label()
         Me.txt_lnumENG = New System.Windows.Forms.TextBox()
         Me.txt_mtextENG = New System.Windows.Forms.TextBox()
         Me.txt_ftextENG = New System.Windows.Forms.TextBox()
@@ -89,15 +89,15 @@ Partial Class frmEveryoneData
         Me.lblFemaleText.TabIndex = 2
         Me.lblFemaleText.Text = "Female Text:"
         '
-        'lblLineCondition
+        'lblCondition
         '
-        Me.lblLineCondition.AutoSize = True
-        Me.lblLineCondition.Location = New System.Drawing.Point(7, 610)
-        Me.lblLineCondition.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.lblLineCondition.Name = "lblLineCondition"
-        Me.lblLineCondition.Size = New System.Drawing.Size(94, 16)
-        Me.lblLineCondition.TabIndex = 4
-        Me.lblLineCondition.Text = "Line Condition:"
+        Me.lblCondition.AutoSize = True
+        Me.lblCondition.Location = New System.Drawing.Point(7, 610)
+        Me.lblCondition.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblCondition.Name = "lblCondition"
+        Me.lblCondition.Size = New System.Drawing.Size(66, 16)
+        Me.lblCondition.TabIndex = 4
+        Me.lblCondition.Text = "Condition:"
         '
         'lblJumpToLine
         '
@@ -109,21 +109,22 @@ Partial Class frmEveryoneData
         Me.lblJumpToLine.TabIndex = 5
         Me.lblJumpToLine.Text = "Jump to Line:"
         '
-        'lblSetFlags
+        'lblExecPyAction
         '
-        Me.lblSetFlags.AutoSize = True
-        Me.lblSetFlags.Location = New System.Drawing.Point(7, 682)
-        Me.lblSetFlags.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.lblSetFlags.Name = "lblSetFlags"
-        Me.lblSetFlags.Size = New System.Drawing.Size(67, 16)
-        Me.lblSetFlags.TabIndex = 6
-        Me.lblSetFlags.Text = "Set Flags:"
+        Me.lblExecPyAction.AutoSize = True
+        Me.lblExecPyAction.Location = New System.Drawing.Point(7, 682)
+        Me.lblExecPyAction.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblExecPyAction.Name = "lblExecPyAction"
+        Me.lblExecPyAction.Size = New System.Drawing.Size(142, 16)
+        Me.lblExecPyAction.TabIndex = 6
+        Me.lblExecPyAction.Text = "Execute Python Action:"
         '
         'txt_lnumENG
         '
         Me.txt_lnumENG.Location = New System.Drawing.Point(104, 6)
         Me.txt_lnumENG.Margin = New System.Windows.Forms.Padding(2)
         Me.txt_lnumENG.Name = "txt_lnumENG"
+        Me.txt_lnumENG.ReadOnly = True
         Me.txt_lnumENG.Size = New System.Drawing.Size(67, 22)
         Me.txt_lnumENG.TabIndex = 7
         Me.txt_lnumENG.TabStop = False
@@ -160,6 +161,7 @@ Partial Class frmEveryoneData
         Me.txt_lconditionENG.Margin = New System.Windows.Forms.Padding(2)
         Me.txt_lconditionENG.Multiline = True
         Me.txt_lconditionENG.Name = "txt_lconditionENG"
+        Me.txt_lconditionENG.ReadOnly = True
         Me.txt_lconditionENG.Size = New System.Drawing.Size(938, 25)
         Me.txt_lconditionENG.TabIndex = 2
         '
@@ -168,6 +170,7 @@ Partial Class frmEveryoneData
         Me.txt_jumplineENG.Location = New System.Drawing.Point(537, 6)
         Me.txt_jumplineENG.Margin = New System.Windows.Forms.Padding(2)
         Me.txt_jumplineENG.Name = "txt_jumplineENG"
+        Me.txt_jumplineENG.ReadOnly = True
         Me.txt_jumplineENG.Size = New System.Drawing.Size(67, 22)
         Me.txt_jumplineENG.TabIndex = 5
         '
@@ -178,6 +181,7 @@ Partial Class frmEveryoneData
         Me.txt_setflagsENG.Location = New System.Drawing.Point(10, 700)
         Me.txt_setflagsENG.Margin = New System.Windows.Forms.Padding(2)
         Me.txt_setflagsENG.Name = "txt_setflagsENG"
+        Me.txt_setflagsENG.ReadOnly = True
         Me.txt_setflagsENG.Size = New System.Drawing.Size(938, 22)
         Me.txt_setflagsENG.TabIndex = 3
         '
@@ -447,9 +451,9 @@ Partial Class frmEveryoneData
         Me.Controls.Add(Me.txt_ftextENG)
         Me.Controls.Add(Me.txt_mtextENG)
         Me.Controls.Add(Me.txt_lnumENG)
-        Me.Controls.Add(Me.lblSetFlags)
+        Me.Controls.Add(Me.lblExecPyAction)
         Me.Controls.Add(Me.lblJumpToLine)
-        Me.Controls.Add(Me.lblLineCondition)
+        Me.Controls.Add(Me.lblCondition)
         Me.Controls.Add(Me.lblFemaleText)
         Me.Controls.Add(Me.lblMaleText)
         Me.Controls.Add(Me.lblLineNumber)
@@ -471,9 +475,9 @@ Partial Class frmEveryoneData
     Friend WithEvents lblLineNumber As Label
     Friend WithEvents lblMaleText As Label
     Friend WithEvents lblFemaleText As Label
-    Friend WithEvents lblLineCondition As Label
+    Friend WithEvents lblCondition As Label
     Friend WithEvents lblJumpToLine As Label
-    Friend WithEvents lblSetFlags As Label
+    Friend WithEvents lblExecPyAction As Label
     Friend WithEvents txt_lnumENG As TextBox
     Friend WithEvents txt_mtextENG As TextBox
     Friend WithEvents txt_ftextENG As TextBox
