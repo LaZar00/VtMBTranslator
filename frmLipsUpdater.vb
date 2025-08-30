@@ -6,6 +6,7 @@ Imports System.Text.RegularExpressions
 
 
 Public Class frmLipsUpdater
+
     Public Const dialogueStaticPath As String = "\sound\character\dlg"
 
     Public strLipsFullPath As String = String.Empty
@@ -154,7 +155,7 @@ Public Class frmLipsUpdater
                 If Not strFileName.First Is String.Empty Then
                     ' We found something, now read the file
                     strLipLines = File.ReadAllLines(strFileName.First,
-                                                    System.Text.Encoding.GetEncoding(frmVtMBTranslator.ISO_8859_1))
+                                                    System.Text.Encoding.GetEncoding(frmVtMBTranslator.FT.iCodepageDLGLanguage))
 
                     ' Now get the speaker name
                     If strLipLines.Count > 0 Then
@@ -398,7 +399,7 @@ Public Class frmLipsUpdater
 
     Public Sub WriteLipFile(ByVal strLipOutputFileName As String, ByVal strLipLines() As String)
         Using fDLG As StreamWriter = New StreamWriter(File.Open(strLipOutputFileName, FileMode.Create),
-                                  System.Text.Encoding.GetEncoding(frmVtMBTranslator.ISO_8859_1))
+                                  System.Text.Encoding.GetEncoding(frmVtMBTranslator.FT.iCodepageDLGLanguage))
             For Each strLipLine In strLipLines
                 fDLG.WriteLine(strLipLine)
             Next
@@ -410,7 +411,7 @@ Public Class frmLipsUpdater
         Dim numLine As Integer = 0
 
         Dim strLipLines() As String = File.ReadAllLines(strLipInputFileName,
-                                                        System.Text.Encoding.GetEncoding(frmVtMBTranslator.ISO_8859_1))
+                                                        System.Text.Encoding.GetEncoding(frmVtMBTranslator.FT.iCodepageDLGLanguage))
 
         Try
             '''''''''''''' Update PHRASE
@@ -457,8 +458,7 @@ Public Class frmLipsUpdater
         ' First we will "create" the VCD file by using thee male file and writing it with
         ' the _col_e.wav part changed to female.
         ' So we ned to edit the female .vcd line appointing to the female .mp3/.wav
-        Dim strVCDLines() As String = File.ReadAllLines(strVCDFullPath + "e.vcd",
-                                                        System.Text.Encoding.GetEncoding(frmVtMBTranslator.ISO_8859_1))
+        Dim strVCDLines() As String = File.ReadAllLines(strVCDFullPath + "e.vcd")
 
         While numlines < strVCDLines.Count And Not found
             If InStr(strVCDLines(numlines), "_col_e.") Then
@@ -471,8 +471,7 @@ Public Class frmLipsUpdater
         End While
 
         ' Write new file
-        Using fDLG As StreamWriter = New StreamWriter(File.Open(strResultFullPath + "f.vcd", FileMode.Create),
-                                                                System.Text.Encoding.GetEncoding(frmVtMBTranslator.ISO_8859_1))
+        Using fDLG As StreamWriter = New StreamWriter(File.Open(strResultFullPath + "f.vcd", FileMode.Create))
             For Each strVCDLine In strVCDLines
                 fDLG.WriteLine(strVCDLine)
             Next
