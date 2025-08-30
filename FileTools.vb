@@ -9,10 +9,12 @@ Public Class FileTools
 
     Public strPrimaryDLGPath, strSecondaryDLGPath As String
     Public strLipsFolder, strIndividualLipsFolder, strVCDFolder, strMP3Folder, strResultFolder As String
-    Public bCaseSensitive, bUnicode As Boolean
+    Public bCaseSensitive, bUnicode, bCodepageVerified, bMaximized As Boolean
     Public iClansDataWidth, iClansDataHeight, iClansDataXPos, iClansDataYPos As Integer
     Public iIndividualLipsEditorWidth, iIndividualLipsEditorHeight, iIndividualLipsEditorXPos, iIndividualLipsEditorYPos As Integer
     Public strTargetLang As String
+    Public iCodepageDLGLanguage As Integer
+    Public strColumnsdgvDLG1Widths As String
 
     Public lstCFGKeys As Hashtable = New Hashtable()
 
@@ -42,7 +44,24 @@ Public Class FileTools
         lstCFGKeys.Add("ENCODING_UNICODE", "")
 
         lstCFGKeys.Add("DEEPL_TARGET_LANGUAGE", "")
+        lstCFGKeys.Add("CODEPAGE_DLG_LANGUAGE", "")
+        lstCFGKeys.Add("CODEPAGE_VERIFIED", "")
+
+        lstCFGKeys.Add("DGVDLG1_COLUMNS_WIDTH", "")
+        lstCFGKeys.Add("MAXIMIZED", "")
     End Sub
+
+
+    Public Sub PrepareColumnsdgvDLG1Widths()
+        strColumnsdgvDLG1Widths = ""
+
+        For i = 1 To frmVtMBTranslator.dgvDLG1.ColumnCount - 1
+            strColumnsdgvDLG1Widths += frmVtMBTranslator.dgvDLG1.Columns(i).Width.ToString()
+
+            If (i < frmVtMBTranslator.dgvDLG1.ColumnCount - 1) Then strColumnsdgvDLG1Widths += "#"
+        Next
+    End Sub
+
 
     Public Sub SetDefaultValues()
         strPrimaryDLGPath = ""
@@ -69,6 +88,13 @@ Public Class FileTools
         bUnicode = False
 
         strTargetLang = "ES"
+        iCodepageDLGLanguage = My.Computer.Registry.GetValue(
+                                    "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage", "ACP", Nothing)
+        bCodepageVerified = 0
+
+        bMaximized = 0
+
+        PrepareColumnsdgvDLG1Widths()
 
     End Sub
 
@@ -137,6 +163,46 @@ Public Class FileTools
             End If
 
             strTargetLang = lstCFGKeys("DEEPL_TARGET_LANGUAGE").ToString()
+
+            If Not (Int32.TryParse(lstCFGKeys("CODEPAGE_DLG_LANGUAGE").ToString(), iCodepageDLGLanguage)) Then iCodepageDLGLanguage = 1252
+
+            If lstCFGKeys("CODEPAGE_VERIFIED").ToString() = "1" Then
+                bCodepageVerified = True
+            Else
+                bCodepageVerified = False
+            End If
+
+            If ((My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage",
+                                              "ACP", Nothing) <> iCodepageDLGLanguage) And (Not bCodepageVerified)) Then
+                If (MsgBox("The codepage set in the VtMBTranslator tool differs from the one of this system. Do you want to continue and leave that codepage?" + vbCrLf + vbCrLf +
+                           "(NOTE: This will not be asked again. You can always change the codepage in .CFG file.)",
+                           MessageBoxButtons.YesNo,
+                           "Question") = MsgBoxResult.No) Then
+
+                    iCodepageDLGLanguage = My.Computer.Registry.
+                                                GetValue("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage",
+                                                         "ACP", Nothing)
+
+                End If
+
+                bCodepageVerified = True
+
+                WriteCFGFile()
+            End If
+
+            strColumnsdgvDLG1Widths = lstCFGKeys("DGVDLG1_COLUMNS_WIDTH").ToString()
+
+            If (strColumnsdgvDLG1Widths = "") Then
+                PrepareColumnsdgvDLG1Widths()
+                WriteCFGFile()
+            End If
+
+            If (lstCFGKeys("MAXIMIZED").ToString() = "1") Then
+                bMaximized = True
+            Else
+                bMaximized = False
+            End If
+
         Else
             SetDefaultValues()
             WriteCFGFile()
@@ -181,6 +247,21 @@ Public Class FileTools
         End If
 
         lstCFGKeys("DEEPL_TARGET_LANGUAGE") = strTargetLang
+        lstCFGKeys("CODEPAGE_DLG_LANGUAGE") = iCodepageDLGLanguage
+
+        If bCodepageVerified Then
+            lstCFGKeys("CODEPAGE_VERIFIED") = "1"
+        Else
+            lstCFGKeys("CODEPAGE_VERIFIED") = "0"
+        End If
+
+        lstCFGKeys("DGVDLG1_COLUMNS_WIDTH") = strColumnsdgvDLG1Widths
+
+        If bMaximized Then
+            lstCFGKeys("MAXIMIZED") = "1"
+        Else
+            lstCFGKeys("MAXIMIZED") = "0"
+        End If
 
         ' Write VtMBTranslator.cfg
         For Each strCFGKey In lstCFGKeys
