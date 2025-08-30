@@ -71,7 +71,9 @@ Partial Class frmVtMBTranslator
         Me.btnFS = New System.Windows.Forms.Button()
         Me.btnCompClans = New System.Windows.Forms.Button()
         Me.panelLOWER = New System.Windows.Forms.Panel()
-        Me.lbEncoding = New System.Windows.Forms.Label()
+        Me.lbCodepage = New System.Windows.Forms.Label()
+        Me.cbCodepage = New System.Windows.Forms.ComboBox()
+        Me.lbEncodingLIPS = New System.Windows.Forms.Label()
         Me.cbEncoding = New System.Windows.Forms.ComboBox()
         Me.btnIndividualLipsEditor = New System.Windows.Forms.Button()
         Me.btnUpdateLips = New System.Windows.Forms.Button()
@@ -161,7 +163,7 @@ Partial Class frmVtMBTranslator
         '
         Me.btnLoadDLG2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnLoadDLG2.Enabled = False
-        Me.btnLoadDLG2.Location = New System.Drawing.Point(1288, 4)
+        Me.btnLoadDLG2.Location = New System.Drawing.Point(1297, 4)
         Me.btnLoadDLG2.Name = "btnLoadDLG2"
         Me.btnLoadDLG2.Size = New System.Drawing.Size(126, 34)
         Me.btnLoadDLG2.TabIndex = 5
@@ -171,7 +173,7 @@ Partial Class frmVtMBTranslator
         'txtDLG2
         '
         Me.txtDLG2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtDLG2.Location = New System.Drawing.Point(768, 10)
+        Me.txtDLG2.Location = New System.Drawing.Point(777, 10)
         Me.txtDLG2.Name = "txtDLG2"
         Me.txtDLG2.ReadOnly = True
         Me.txtDLG2.Size = New System.Drawing.Size(516, 22)
@@ -224,7 +226,7 @@ Partial Class frmVtMBTranslator
         Me.cNum2.Name = "cNum2"
         Me.cNum2.ReadOnly = True
         Me.cNum2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.cNum2.Width = 60
+        Me.cNum2.Width = 50
         '
         'cMale2
         '
@@ -337,9 +339,9 @@ Partial Class frmVtMBTranslator
         'btnEditClans
         '
         Me.btnEditClans.Enabled = False
-        Me.btnEditClans.Location = New System.Drawing.Point(324, 7)
+        Me.btnEditClans.Location = New System.Drawing.Point(284, 7)
         Me.btnEditClans.Name = "btnEditClans"
-        Me.btnEditClans.Size = New System.Drawing.Size(135, 52)
+        Me.btnEditClans.Size = New System.Drawing.Size(100, 52)
         Me.btnEditClans.TabIndex = 9
         Me.btnEditClans.Text = "Edit Clans"
         Me.btnEditClans.UseVisualStyleBackColor = True
@@ -347,9 +349,9 @@ Partial Class frmVtMBTranslator
         'btnCompEveryone
         '
         Me.btnCompEveryone.Enabled = False
-        Me.btnCompEveryone.Location = New System.Drawing.Point(465, 7)
+        Me.btnCompEveryone.Location = New System.Drawing.Point(390, 7)
         Me.btnCompEveryone.Name = "btnCompEveryone"
-        Me.btnCompEveryone.Size = New System.Drawing.Size(135, 52)
+        Me.btnCompEveryone.Size = New System.Drawing.Size(136, 52)
         Me.btnCompEveryone.TabIndex = 10
         Me.btnCompEveryone.Text = "Compare Everyone"
         Me.btnCompEveryone.UseVisualStyleBackColor = True
@@ -363,7 +365,7 @@ Partial Class frmVtMBTranslator
         Me.txtReport.Name = "txtReport"
         Me.txtReport.ReadOnly = True
         Me.txtReport.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtReport.Size = New System.Drawing.Size(1471, 125)
+        Me.txtReport.Size = New System.Drawing.Size(1469, 125)
         Me.txtReport.TabIndex = 12
         Me.txtReport.WordWrap = False
         '
@@ -371,7 +373,7 @@ Partial Class frmVtMBTranslator
         '
         Me.btnOPENTE.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnOPENTE.Enabled = False
-        Me.btnOPENTE.Location = New System.Drawing.Point(1172, 7)
+        Me.btnOPENTE.Location = New System.Drawing.Point(1170, 7)
         Me.btnOPENTE.Name = "btnOPENTE"
         Me.btnOPENTE.Size = New System.Drawing.Size(91, 52)
         Me.btnOPENTE.TabIndex = 13
@@ -393,7 +395,7 @@ Partial Class frmVtMBTranslator
         Me.btnRefresh2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnRefresh2.BackgroundImage = Global.VtMBTranslator.My.Resources.Resources.refresh
         Me.btnRefresh2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.btnRefresh2.Location = New System.Drawing.Point(1414, 4)
+        Me.btnRefresh2.Location = New System.Drawing.Point(1423, 4)
         Me.btnRefresh2.Name = "btnRefresh2"
         Me.btnRefresh2.Size = New System.Drawing.Size(34, 34)
         Me.btnRefresh2.TabIndex = 15
@@ -438,9 +440,9 @@ Partial Class frmVtMBTranslator
         'btnEditEveryone
         '
         Me.btnEditEveryone.Enabled = False
-        Me.btnEditEveryone.Location = New System.Drawing.Point(183, 7)
+        Me.btnEditEveryone.Location = New System.Drawing.Point(167, 7)
         Me.btnEditEveryone.Name = "btnEditEveryone"
-        Me.btnEditEveryone.Size = New System.Drawing.Size(135, 52)
+        Me.btnEditEveryone.Size = New System.Drawing.Size(109, 52)
         Me.btnEditEveryone.TabIndex = 20
         Me.btnEditEveryone.Text = "Edit Everyone"
         Me.btnEditEveryone.UseVisualStyleBackColor = True
@@ -449,7 +451,7 @@ Partial Class frmVtMBTranslator
         '
         Me.btnSaveAsDLG1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSaveAsDLG1.Enabled = False
-        Me.btnSaveAsDLG1.Location = New System.Drawing.Point(1065, 7)
+        Me.btnSaveAsDLG1.Location = New System.Drawing.Point(1063, 7)
         Me.btnSaveAsDLG1.Name = "btnSaveAsDLG1"
         Me.btnSaveAsDLG1.Size = New System.Drawing.Size(105, 52)
         Me.btnSaveAsDLG1.TabIndex = 21
@@ -460,7 +462,7 @@ Partial Class frmVtMBTranslator
         '
         Me.btnSaveDLG1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSaveDLG1.Enabled = False
-        Me.btnSaveDLG1.Location = New System.Drawing.Point(945, 7)
+        Me.btnSaveDLG1.Location = New System.Drawing.Point(943, 7)
         Me.btnSaveDLG1.Name = "btnSaveDLG1"
         Me.btnSaveDLG1.Size = New System.Drawing.Size(118, 52)
         Me.btnSaveDLG1.TabIndex = 22
@@ -490,19 +492,19 @@ Partial Class frmVtMBTranslator
         'btnCompClans
         '
         Me.btnCompClans.Enabled = False
-        Me.btnCompClans.Location = New System.Drawing.Point(606, 7)
+        Me.btnCompClans.Location = New System.Drawing.Point(530, 7)
         Me.btnCompClans.Name = "btnCompClans"
-        Me.btnCompClans.Size = New System.Drawing.Size(135, 52)
+        Me.btnCompClans.Size = New System.Drawing.Size(117, 52)
         Me.btnCompClans.TabIndex = 26
         Me.btnCompClans.Text = "Compare Clans"
         Me.btnCompClans.UseVisualStyleBackColor = True
         '
         'panelLOWER
         '
-        Me.panelLOWER.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.panelLOWER.AutoSize = True
-        Me.panelLOWER.Controls.Add(Me.lbEncoding)
+        Me.panelLOWER.Controls.Add(Me.lbCodepage)
+        Me.panelLOWER.Controls.Add(Me.cbCodepage)
+        Me.panelLOWER.Controls.Add(Me.lbEncodingLIPS)
         Me.panelLOWER.Controls.Add(Me.cbEncoding)
         Me.panelLOWER.Controls.Add(Me.btnIndividualLipsEditor)
         Me.panelLOWER.Controls.Add(Me.btnUpdateLips)
@@ -520,20 +522,42 @@ Partial Class frmVtMBTranslator
         Me.panelLOWER.Controls.Add(Me.txtReport)
         Me.panelLOWER.Controls.Add(Me.btnCompEveryone)
         Me.panelLOWER.Controls.Add(Me.btnEditClans)
-        Me.panelLOWER.Location = New System.Drawing.Point(1, 596)
+        Me.panelLOWER.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.panelLOWER.Location = New System.Drawing.Point(0, 600)
         Me.panelLOWER.Name = "panelLOWER"
-        Me.panelLOWER.Size = New System.Drawing.Size(1497, 198)
+        Me.panelLOWER.Size = New System.Drawing.Size(1495, 198)
         Me.panelLOWER.TabIndex = 27
         '
-        'lbEncoding
+        'lbCodepage
         '
-        Me.lbEncoding.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbEncoding.AutoSize = True
-        Me.lbEncoding.Location = New System.Drawing.Point(1267, 11)
-        Me.lbEncoding.Name = "lbEncoding"
-        Me.lbEncoding.Size = New System.Drawing.Size(67, 16)
-        Me.lbEncoding.TabIndex = 31
-        Me.lbEncoding.Text = "Encoding:"
+        Me.lbCodepage.AutoSize = True
+        Me.lbCodepage.Location = New System.Drawing.Point(653, 11)
+        Me.lbCodepage.Name = "lbCodepage"
+        Me.lbCodepage.Size = New System.Drawing.Size(75, 16)
+        Me.lbCodepage.TabIndex = 33
+        Me.lbCodepage.Text = "Codepage:"
+        '
+        'cbCodepage
+        '
+        Me.cbCodepage.CausesValidation = False
+        Me.cbCodepage.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cbCodepage.FormattingEnabled = True
+        Me.cbCodepage.Items.AddRange(New Object() {"1250", "1251", "1252", "1253", "1254", "1255", "1256", "1257", "1258"})
+        Me.cbCodepage.Location = New System.Drawing.Point(654, 32)
+        Me.cbCodepage.Name = "cbCodepage"
+        Me.cbCodepage.Size = New System.Drawing.Size(82, 24)
+        Me.cbCodepage.TabIndex = 32
+        Me.cbCodepage.Text = "1252"
+        '
+        'lbEncodingLIPS
+        '
+        Me.lbEncodingLIPS.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbEncodingLIPS.AutoSize = True
+        Me.lbEncodingLIPS.Location = New System.Drawing.Point(1265, 11)
+        Me.lbEncodingLIPS.Name = "lbEncodingLIPS"
+        Me.lbEncodingLIPS.Size = New System.Drawing.Size(99, 16)
+        Me.lbEncodingLIPS.TabIndex = 31
+        Me.lbEncodingLIPS.Text = "Encoding .LIPs:"
         '
         'cbEncoding
         '
@@ -542,7 +566,7 @@ Partial Class frmVtMBTranslator
         Me.cbEncoding.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cbEncoding.FormattingEnabled = True
         Me.cbEncoding.Items.AddRange(New Object() {"Char", "Unicode"})
-        Me.cbEncoding.Location = New System.Drawing.Point(1268, 32)
+        Me.cbEncoding.Location = New System.Drawing.Point(1266, 32)
         Me.cbEncoding.Name = "cbEncoding"
         Me.cbEncoding.Size = New System.Drawing.Size(105, 24)
         Me.cbEncoding.TabIndex = 30
@@ -551,7 +575,7 @@ Partial Class frmVtMBTranslator
         'btnIndividualLipsEditor
         '
         Me.btnIndividualLipsEditor.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnIndividualLipsEditor.Location = New System.Drawing.Point(1379, 7)
+        Me.btnIndividualLipsEditor.Location = New System.Drawing.Point(1377, 7)
         Me.btnIndividualLipsEditor.Name = "btnIndividualLipsEditor"
         Me.btnIndividualLipsEditor.Size = New System.Drawing.Size(105, 52)
         Me.btnIndividualLipsEditor.TabIndex = 29
@@ -562,7 +586,7 @@ Partial Class frmVtMBTranslator
         '
         Me.btnUpdateLips.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdateLips.Enabled = False
-        Me.btnUpdateLips.Location = New System.Drawing.Point(839, 7)
+        Me.btnUpdateLips.Location = New System.Drawing.Point(837, 7)
         Me.btnUpdateLips.Name = "btnUpdateLips"
         Me.btnUpdateLips.Size = New System.Drawing.Size(104, 52)
         Me.btnUpdateLips.TabIndex = 28
@@ -638,7 +662,7 @@ Partial Class frmVtMBTranslator
         Me.cNum.ReadOnly = True
         Me.cNum.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.cNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.cNum.Width = 60
+        Me.cNum.Width = 50
         '
         'cMale
         '
@@ -750,8 +774,6 @@ Partial Class frmVtMBTranslator
         '
         'panelUP
         '
-        Me.panelUP.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.panelUP.Controls.Add(Me.btnDGV2Clear)
         Me.panelUP.Controls.Add(Me.btnRefresh2)
         Me.panelUP.Controls.Add(Me.btnRefresh1)
@@ -759,9 +781,10 @@ Partial Class frmVtMBTranslator
         Me.panelUP.Controls.Add(Me.txtDLG2)
         Me.panelUP.Controls.Add(Me.btnLoadDLG1)
         Me.panelUP.Controls.Add(Me.txtDLG1)
-        Me.panelUP.Location = New System.Drawing.Point(2, 2)
+        Me.panelUP.Dock = System.Windows.Forms.DockStyle.Top
+        Me.panelUP.Location = New System.Drawing.Point(0, 0)
         Me.panelUP.Name = "panelUP"
-        Me.panelUP.Size = New System.Drawing.Size(1486, 43)
+        Me.panelUP.Size = New System.Drawing.Size(1495, 43)
         Me.panelUP.TabIndex = 29
         '
         'btnDGV2Clear
@@ -769,7 +792,7 @@ Partial Class frmVtMBTranslator
         Me.btnDGV2Clear.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDGV2Clear.BackgroundImage = Global.VtMBTranslator.My.Resources.Resources.EmptyDatagrid
         Me.btnDGV2Clear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.btnDGV2Clear.Location = New System.Drawing.Point(1448, 4)
+        Me.btnDGV2Clear.Location = New System.Drawing.Point(1457, 4)
         Me.btnDGV2Clear.Name = "btnDGV2Clear"
         Me.btnDGV2Clear.Size = New System.Drawing.Size(34, 34)
         Me.btnDGV2Clear.TabIndex = 16
@@ -837,19 +860,13 @@ Partial Class frmVtMBTranslator
     Friend WithEvents splcontDGV As SplitContainer
     Friend WithEvents panelUP As Panel
     Friend WithEvents dgvDLG1 As DataGridView
-    Friend WithEvents cNum2 As DataGridViewTextBoxColumn
-    Friend WithEvents cMale2 As DataGridViewTextBoxColumn
-    Friend WithEvents cFemale2 As DataGridViewTextBoxColumn
-    Friend WithEvents cJump2 As DataGridViewTextBoxColumn
-    Friend WithEvents cCondition2 As DataGridViewTextBoxColumn
-    Friend WithEvents cExePy2 As DataGridViewTextBoxColumn
-    Friend WithEvents cBrujah2 As DataGridViewTextBoxColumn
-    Friend WithEvents cGangrel2 As DataGridViewTextBoxColumn
-    Friend WithEvents cNosferatu2 As DataGridViewTextBoxColumn
-    Friend WithEvents cToreador2 As DataGridViewTextBoxColumn
-    Friend WithEvents cTremere2 As DataGridViewTextBoxColumn
-    Friend WithEvents cVentrue2 As DataGridViewTextBoxColumn
-    Friend WithEvents cMalkavian2 As DataGridViewTextBoxColumn
+    Friend WithEvents btnUpdateLips As Button
+    Friend WithEvents btnIndividualLipsEditor As Button
+    Friend WithEvents btnDGV2Clear As Button
+    Friend WithEvents cbEncoding As ComboBox
+    Friend WithEvents lbEncodingLIPS As Label
+    Friend WithEvents lbCodepage As Label
+    Friend WithEvents cbCodepage As ComboBox
     Friend WithEvents cNum As DataGridViewTextBoxColumn
     Friend WithEvents cMale As DataGridViewTextBoxColumn
     Friend WithEvents cFemale As DataGridViewTextBoxColumn
@@ -863,9 +880,17 @@ Partial Class frmVtMBTranslator
     Friend WithEvents cTremere As DataGridViewTextBoxColumn
     Friend WithEvents cVentrue As DataGridViewTextBoxColumn
     Friend WithEvents cMalkavian As DataGridViewTextBoxColumn
-    Friend WithEvents btnUpdateLips As Button
-    Friend WithEvents btnIndividualLipsEditor As Button
-    Friend WithEvents btnDGV2Clear As Button
-    Friend WithEvents cbEncoding As ComboBox
-    Friend WithEvents lbEncoding As Label
+    Friend WithEvents cNum2 As DataGridViewTextBoxColumn
+    Friend WithEvents cMale2 As DataGridViewTextBoxColumn
+    Friend WithEvents cFemale2 As DataGridViewTextBoxColumn
+    Friend WithEvents cJump2 As DataGridViewTextBoxColumn
+    Friend WithEvents cCondition2 As DataGridViewTextBoxColumn
+    Friend WithEvents cExePy2 As DataGridViewTextBoxColumn
+    Friend WithEvents cBrujah2 As DataGridViewTextBoxColumn
+    Friend WithEvents cGangrel2 As DataGridViewTextBoxColumn
+    Friend WithEvents cNosferatu2 As DataGridViewTextBoxColumn
+    Friend WithEvents cToreador2 As DataGridViewTextBoxColumn
+    Friend WithEvents cTremere2 As DataGridViewTextBoxColumn
+    Friend WithEvents cVentrue2 As DataGridViewTextBoxColumn
+    Friend WithEvents cMalkavian2 As DataGridViewTextBoxColumn
 End Class

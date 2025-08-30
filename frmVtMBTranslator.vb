@@ -75,7 +75,7 @@ Public Class frmVtMBTranslator
         EnableDoubleBuffered(dgvDLG1)
         EnableDoubleBuffered(dgvDLG2)
 
-        ' Asign .cfg file parameters
+        ' Set .CFG file settings
         FT.strGlobalPath = Application.StartupPath
         FT.ReadCFGFile()
 
@@ -83,6 +83,44 @@ Public Class frmVtMBTranslator
             cbEncoding.SelectedIndex = 1
         Else
             cbEncoding.SelectedIndex = 0
+        End If
+
+        If (cbCodepage.Items.IndexOf(FT.iCodepageDLGLanguage.ToString()) <> -1) Then
+            cbCodepage.SelectedIndex = cbCodepage.Items.IndexOf(FT.iCodepageDLGLanguage.ToString())
+        ElseIf (cbCodepage.Items.IndexOf(My.Computer.Registry.
+                                                GetValue("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage",
+                                                         "ACP", Nothing).ToString()) <> -1) Then
+            cbCodepage.SelectedIndex = cbCodepage.Items.IndexOf(My.Computer.Registry.
+                                                GetValue("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage",
+                                                         "ACP", Nothing).ToString())
+        Else    ' We will use as Default Windows-1252
+            cbCodepage.SelectedIndex = cbCodepage.Items.IndexOf("1252")
+        End If
+
+        For i = 1 To dgvDLG1.ColumnCount - 1
+            dgvDLG1.Columns(i).Width = FT.strColumnsdgvDLG1Widths.Split("#")(i - 1)
+        Next
+
+        If (FT.bMaximized) Then
+            Me.WindowState = FormWindowState.Maximized
+
+            splcontDGV.SplitterDistance = 'dgvDLG1.Columns(0).Width +
+                                          dgvDLG1.Columns(1).Width +
+                                          dgvDLG1.Columns(2).Width +
+                                          dgvDLG1.Columns(3).Width +
+                                          dgvDLG1.Columns(4).Width +
+                                          dgvDLG1.Columns(5).Width +
+                                          dgvDLG1.Columns(6).Width +
+                                          dgvDLG1.Columns(7).Width +
+                                          dgvDLG1.Columns(8).Width +
+                                          dgvDLG1.Columns(9).Width +
+                                          dgvDLG1.Columns(10).Width +
+                                          dgvDLG1.Columns(11).Width +
+                                          dgvDLG1.Columns(12).Width + 10 + 80
+        Else
+            Me.WindowState = FormWindowState.Normal
+
+            splcontDGV.SplitterDistance = (splcontDGV.Width / 2) - (splcontDGV.SplitterWidth / 2)
         End If
 
         formLoaded = True
@@ -146,7 +184,8 @@ Public Class frmVtMBTranslator
         dgvDLG.Rows.Clear()
         EditClans = False
 
-        Dim strLines() As String = File.ReadAllLines(loadDLG, System.Text.Encoding.GetEncoding(ISO_8859_1))
+        ' Dim strLines() As String = File.ReadAllLines(loadDLG, System.Text.Encoding.GetEncoding(ISO_8859_1))
+        Dim strLines() As String = File.ReadAllLines(loadDLG, System.Text.Encoding.GetEncoding(FT.iCodepageDLGLanguage))
 
         dgvDLG.RowHeadersVisible = False
         numRows = 0
@@ -710,8 +749,10 @@ Public Class frmVtMBTranslator
         Dim i, numCol As Integer
         Dim strLine, individualCell As String
 
+        'Using fDLG As StreamWriter = New StreamWriter(File.Open(FileName, FileMode.Create),
+        '                                              System.Text.Encoding.GetEncoding(ISO_8859_1))
         Using fDLG As StreamWriter = New StreamWriter(File.Open(FileName, FileMode.Create),
-                                                      System.Text.Encoding.GetEncoding(ISO_8859_1))
+                                                      System.Text.Encoding.GetEncoding(FT.iCodepageDLGLanguage))
 
             For i = 0 To numRows - 1
                 strLine = ""
@@ -1294,25 +1335,33 @@ Public Class frmVtMBTranslator
 
 
     Private Sub frmVtMBTranslator_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-        If Me.WindowState = FormWindowState.Maximized Then
-            splcontDGV.SplitterDistance = 'dgvDLG1.Columns(0).Width +
-                                          dgvDLG1.Columns(1).Width +
-                                          dgvDLG1.Columns(2).Width +
-                                          dgvDLG1.Columns(3).Width +
-                                          dgvDLG1.Columns(4).Width +
-                                          dgvDLG1.Columns(5).Width +
-                                          dgvDLG1.Columns(6).Width +
-                                          dgvDLG1.Columns(7).Width +
-                                          dgvDLG1.Columns(8).Width +
-                                          dgvDLG1.Columns(9).Width +
-                                          dgvDLG1.Columns(10).Width +
-                                          dgvDLG1.Columns(11).Width +
-                                          dgvDLG1.Columns(12).Width + 10 + 80
+        If (formLoaded) Then
+            If Me.WindowState = FormWindowState.Maximized Then
+                splcontDGV.SplitterDistance = 'dgvDLG1.Columns(0).Width +
+                                              dgvDLG1.Columns(1).Width +
+                                              dgvDLG1.Columns(2).Width +
+                                              dgvDLG1.Columns(3).Width +
+                                              dgvDLG1.Columns(4).Width +
+                                              dgvDLG1.Columns(5).Width +
+                                              dgvDLG1.Columns(6).Width +
+                                              dgvDLG1.Columns(7).Width +
+                                              dgvDLG1.Columns(8).Width +
+                                              dgvDLG1.Columns(9).Width +
+                                              dgvDLG1.Columns(10).Width +
+                                              dgvDLG1.Columns(11).Width +
+                                              dgvDLG1.Columns(12).Width + 10 + 80
+
+                FT.bMaximized = True
+                FT.WriteCFGFile()
+            ElseIf Me.WindowState = FormWindowState.Normal Then
+                splcontDGV.SplitterDistance = (splcontDGV.Width / 2) - (splcontDGV.SplitterWidth / 2)
+
+                FT.bMaximized = False
+                FT.WriteCFGFile()
+            End If
+
         End If
 
-        If Me.WindowState = FormWindowState.Normal Then
-            splcontDGV.SplitterDistance = (splcontDGV.Width / 2) - (splcontDGV.SplitterWidth / 2)
-        End If
     End Sub
 
     Private Sub btnDGV2Clear_Click(sender As Object, e As EventArgs) Handles btnDGV2Clear.Click
@@ -1393,5 +1442,38 @@ Public Class frmVtMBTranslator
         FT.bUnicode = cbEncoding.SelectedIndex
         FT.WriteCFGFile()
     End Sub
+
+    Private Sub cbCodepage_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbCodepage.SelectedIndexChanged
+        If (formLoaded) Then
+            FT.iCodepageDLGLanguage = cbCodepage.Items(cbCodepage.SelectedIndex)
+            FT.WriteCFGFile()
+        End If
+    End Sub
+
+    Private Sub dgvDLG1_ColumnWidthChanged(sender As Object, e As DataGridViewColumnEventArgs) Handles dgvDLG1.ColumnWidthChanged
+        If (formLoaded) Then
+            FT.PrepareColumnsdgvDLG1Widths()
+            FT.WriteCFGFile()
+        End If
+    End Sub
+
+    Private Sub dgvDLG1_CellMouseEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dgvDLG1.CellMouseEnter
+        Dim iTest As Integer
+
+        If (formLoaded) Then
+            If (e.RowIndex > -1 And e.ColumnIndex = 3) Then
+                If (Integer.TryParse(dgvDLG1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value, iTest)) Then
+                    If (dgvDLG1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value < dgvDLG1.RowCount And
+                        dgvDLG1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value > 0) Then
+
+                        dgvDLG1.Rows(e.RowIndex).Cells(e.ColumnIndex).ToolTipText =
+                            dgvDLG1.Rows(dgvDLG1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value - 1).Cells(1).Value
+
+                    End If
+                End If
+            End If
+        End If
+    End Sub
+
 
 End Class
